@@ -196,6 +196,43 @@ ALTER SEQUENCE public.star_star_id_seq OWNED BY public.star.star_id;
 
 
 --
+-- Name: telescope; Type: TABLE; Schema: public; Owner: freecodecamp
+--
+
+CREATE TABLE public.telescope (
+    telescope_id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    launch_year integer NOT NULL,
+    operational boolean NOT NULL,
+    description text
+);
+
+
+ALTER TABLE public.telescope OWNER TO freecodecamp;
+
+--
+-- Name: telescope_telescope_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.telescope_telescope_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.telescope_telescope_id_seq OWNER TO freecodecamp;
+
+--
+-- Name: telescope_telescope_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+--
+
+ALTER SEQUENCE public.telescope_telescope_id_seq OWNED BY public.telescope.telescope_id;
+
+
+--
 -- Name: galaxy galaxy_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
@@ -221,6 +258,13 @@ ALTER TABLE ONLY public.planet ALTER COLUMN planet_id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.star_star_id_seq'::regclass);
+
+
+--
+-- Name: telescope telescope_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.telescope ALTER COLUMN telescope_id SET DEFAULT nextval('public.telescope_telescope_id_seq'::regclass);
 
 
 --
@@ -292,6 +336,15 @@ INSERT INTO public.star VALUES (6, 'Vega', 4, 'A-type', 2.10, true);
 
 
 --
+-- Data for Name: telescope; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
+INSERT INTO public.telescope VALUES (1, 'Hubble Space Telescope', 1990, true, 'Observes in visible and UV spectrum');
+INSERT INTO public.telescope VALUES (2, 'James Webb Space Telescope', 2021, true, 'Infrared space telescope');
+INSERT INTO public.telescope VALUES (3, 'Spitzer Space Telescope', 2003, false, 'Infrared telescope retired in 2020');
+
+
+--
 -- Name: galaxy_galaxy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
@@ -317,6 +370,13 @@ SELECT pg_catalog.setval('public.planet_planet_id_seq', 12, true);
 --
 
 SELECT pg_catalog.setval('public.star_star_id_seq', 6, true);
+
+
+--
+-- Name: telescope_telescope_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.telescope_telescope_id_seq', 3, true);
 
 
 --
@@ -381,6 +441,22 @@ ALTER TABLE ONLY public.star
 
 ALTER TABLE ONLY public.star
     ADD CONSTRAINT star_pkey PRIMARY KEY (star_id);
+
+
+--
+-- Name: telescope telescope_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.telescope
+    ADD CONSTRAINT telescope_name_key UNIQUE (name);
+
+
+--
+-- Name: telescope telescope_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.telescope
+    ADD CONSTRAINT telescope_pkey PRIMARY KEY (telescope_id);
 
 
 --
